@@ -1,0 +1,33 @@
+name: image cosign workflow
+on: push
+jobs:
+    image_build_push_job:
+      runs-on: ubuntu-latest
+      permissions:
+        contents: read
+        packages: write
+        id-token: write
+      steps:
+        - name: login-quay
+          uses: docker/login-action@v3
+          with:
+            registry: quay.io/rh-ee-asavage
+            username: ${{ secrets.USERNAME }}
+            password: ${{ secrets.PASSWORD }}
+        - name: install-cosign
+          uses: sigstore/cosign-installer@main
+          with:
+            cosign-release: 'v2.2.4'
+        - name: check-cosign-install
+          run: cosign version
+        - name: build-sign-push
+          run: |
+            echo "Test message build-sign-push"
+            cat > ./Dockerfile <<EOF
+            FROM alpine
+            CMD ["echo", "Hello container!"]
+            EOF
+            docker build -t quay.io/rh-ee-asavage/gha-image-test:latest .
+            docker push quay.io/rh-ee-asavage/gha-image-test:latest
+            cosign sign -y quay.io/rh-ee-asavage/gha-image-teslatest
+            echo "Success build-sign-push"
