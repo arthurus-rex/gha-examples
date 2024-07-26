@@ -29,5 +29,5 @@ jobs:
             EOF
             docker build -t quay.io/rh-ee-asavage/gha-image-test:latest .
             docker push quay.io/rh-ee-asavage/gha-image-test:latest
-            cosign sign -y quay.io/rh-ee-asavage/gha-image-teslatest
+            cosign sign -y quay.io/rh-ee-asavage/gha-image-test:latest
             echo "Success build-sign-push"
