@@ -20,7 +20,7 @@ jobs:
             cosign-release: 'v2.2.4'
         - name: check-cosign-install
           run: cosign version
-        - name: build-sign-push
+        - name: build-push
           run: |
             echo "Test message build-sign-push"
             cat > ./Dockerfile <<EOF
@@ -29,5 +29,7 @@ jobs:
             EOF
             docker build -t quay.io/rh-ee-asavage/gha-image-test:latest .
             docker push quay.io/rh-ee-asavage/gha-image-test:latest
-            cosign sign -y quay.io/rh-ee-asavage/gha-image-test:latest
             echo "Success build-sign-push"
+        - name: sign-image
+          run: |
+            cosign sign -y quay.io/rh-ee-asavage/gha-image-test:latest@${{ steps.build-push.outputs.digest }}
