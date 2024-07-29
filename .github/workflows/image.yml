@@ -42,4 +42,4 @@ jobs:
 
         - name: sign-image
           run: |
-            cosign sign -y quay.io/rh-ee-asavage/gha-image-test:latest${{ steps.build-push.outputs.digest }}
+            cosign sign -y quay.io/rh-ee-asavage/gha-image-test:latest${{ steps.build-push-image.outputs.digest }}
