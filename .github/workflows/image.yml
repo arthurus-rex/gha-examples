@@ -11,7 +11,9 @@ jobs:
       steps:
         - name: checkout
           uses: actions/checkout@v4.1.1
-          
+          with:
+            fetch-depth: 0
+
         - name: qemu-setup
           uses: docker/setup-qemu-action@v3
 
@@ -29,14 +31,6 @@ jobs:
           uses: sigstore/cosign-installer@main
           with:
             cosign-release: 'v2.2.4'
-
-        - name: check-cosign-install
-          run: cosign version
-
-        - name: checkout
-          uses: actions/checkout@v4.1.1
-          with:
-            fetch-depth: 0
 
         - name: build-push-action
           id: build-push-image
