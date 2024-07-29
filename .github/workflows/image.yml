@@ -9,10 +9,10 @@ jobs:
         id-token: write
 
       steps:
-        - name: checkout
-          uses: actions/checkout@v4.1.1
-          with:
-            fetch-depth: 0
+        # - name: checkout
+        #  uses: actions/checkout@v4.1.1
+        #  with:
+        #    fetch-depth: 0
 
         - name: qemu-setup
           uses: docker/setup-qemu-action@v3
