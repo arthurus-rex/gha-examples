@@ -20,9 +20,13 @@ jobs:
             cosign-release: 'v2.2.4'
         - name: check-cosign-install
           run: cosign version
+        - name: checkout
+          uses: actions/checkout@v4.1.1
+          with:
+            fetch-depth: 0
         - name: build-push
           run: |
-            echo "Test message build-sign-push"
+            echo "Test message build-push"
             cat > ./Dockerfile <<EOF
             FROM alpine
             CMD ["echo", "Hello container!"]
@@ -32,4 +36,4 @@ jobs:
             echo "Success build-sign-push"
         - name: sign-image
           run: |
-            cosign sign -y quay.io/rh-ee-asavage/gha-image-test:latest@${{ steps.build-push.outputs.digest }}
+            cosign sign -y quay.io/rh-ee-asavage/gha-image-test:latest${{ steps.build-push.outputs.digest }}
