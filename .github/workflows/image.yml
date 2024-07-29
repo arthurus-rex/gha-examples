@@ -43,6 +43,7 @@ jobs:
           uses: docker/build-push-action@v3
           with:
             push: true
+            file: ./Dockerfile
             tags: quay.io/rh-ee-asavage/gha-image-test:latest
 
         - name: sign-image
